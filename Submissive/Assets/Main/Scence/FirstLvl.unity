@@ -82153,6 +82153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c40176fa12d6948baec43f1679ea81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseMenu: {fileID: 0}
   sensX: 750
   sensY: 750
   orientation: {fileID: 358397911342169836}
@@ -88393,11 +88394,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5aa0053ac04ca40b593cbc8f6313bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 4
+  runSpeed: 7
   groundDrag: 5
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  _isRunning: 0
+  _walkSound: {fileID: 0}
+  _runSound: {fileID: 0}
   jumpKey: 32
   playerHeight: 2
   whatIsGround:
@@ -93783,10 +93788,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
+  runSpeed: 0
   groundDrag: 5
   jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  _isRunning: 0
+  _walkSound: {fileID: 0}
+  _runSound: {fileID: 0}
   jumpKey: 32
   playerHeight: 2
   whatIsGround:

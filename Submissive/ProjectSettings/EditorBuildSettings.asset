@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Vitaly/Test Scenes/Test.unity
     guid: e43afd59502b9b948bc7a49c534ad824
+  - enabled: 1
+    path: Assets/Ruslan/Scenes/Menu.unity
+    guid: 60f410e9a5d62ff44884951444d2f3e4
+  - enabled: 1
+    path: Assets/Ruslan/Scenes/Ruslan.unity
+    guid: 067e61d2a87b7ca4d93dc61ca3a5d72a
   m_configObjects: {}
