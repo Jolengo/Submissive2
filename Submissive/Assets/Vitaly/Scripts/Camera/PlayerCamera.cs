@@ -28,6 +28,11 @@ public class PlayerCamera : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
+        /*if (xRotation >= -10f && xRotation <= 10f)
+        {
+            xRotation = Random.Range(-5f, 5f);
+        }*/
+
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }

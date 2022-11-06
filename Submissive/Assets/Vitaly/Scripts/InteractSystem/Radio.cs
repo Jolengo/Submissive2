@@ -1,10 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Radio : MonoBehaviour, IInteractable
 {
     [SerializeField] private AudioSource[] _audioSources;
+    // Сюда вставьте нужную аудиодорожку радио
+    [SerializeField] private AudioSource _trueRadioAudioSource;
+    // Подпишите на это событие метод открывания двери
+    // Пример:
+    // |Объект крипта Radio|.CheckWasTrue += |Написанный в вашем классе метод открывания двери|
+    // _radio.CheckWasTrue += OpenDoor;
+    public event Action CheckWasTrue;
     public int _ordinalValueClip;
 
     [SerializeField] private string _prompt;
@@ -25,12 +31,14 @@ public class Radio : MonoBehaviour, IInteractable
         if (_ordinalValueClip >= 0 && _ordinalValueClip <= _audioSources.Length - 1)
         {
             PlayOrdinalAudioClip(_ordinalValueClip);
+            CheckRadioTrack(_trueRadioAudioSource);
         }
         else
         {
             OffOrdinalAudioClip(_ordinalValueClip - 1);
             _ordinalValueClip = 0;
             PlayOrdinalAudioClip(_ordinalValueClip);
+            CheckRadioTrack(_trueRadioAudioSource);
         }
         Debug.Log("Turn music");
         return true;
@@ -44,5 +52,21 @@ public class Radio : MonoBehaviour, IInteractable
     private void OffOrdinalAudioClip(int ordinalValueClip)
     {
         _audioSources[ordinalValueClip].Stop();
+    }
+
+    // Проверка нужной аудиодорожки
+    public bool CheckRadioTrack(AudioSource sourceTrack)
+    {
+        if (sourceTrack.isPlaying)
+        {
+            Debug.Log("return true");
+            CheckWasTrue?.Invoke();
+            return true;
+        }
+        else
+        {
+            Debug.Log("return false");
+            return false;
+        }
     }
 }
