@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!82 &101931338 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 398135596327402142, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+  m_PrefabInstance: {fileID: 358397911522270813}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &478702380
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,6 +320,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2141227203 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6501333514487519317, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+  m_PrefabInstance: {fileID: 358397911522270813}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &358397911522270813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -369,6 +379,30 @@ PrefabInstance:
     - target: {fileID: 358397911437843183, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011064318093816059, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852588317523406341, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+      propertyPath: runSpeed
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852588317523406341, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+      propertyPath: _runSound
+      value: 
+      objectReference: {fileID: 101931338}
+    - target: {fileID: 8852588317523406341, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852588317523406341, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+      propertyPath: _walkSound
+      value: 
+      objectReference: {fileID: 2141227203}
+    - target: {fileID: 8852588317523406341, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+      propertyPath: whatIsGround.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
@@ -436,6 +470,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 243154226495803040, guid: 3bbb4fa12f8f5b24ba1be89d0f960ee3, type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4972258959393298232, guid: 3bbb4fa12f8f5b24ba1be89d0f960ee3, type: 3}
       propertyPath: m_RootOrder
       value: 4
