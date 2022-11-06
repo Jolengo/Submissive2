@@ -15,9 +15,6 @@ public class ChangeMovementTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter");
-        //bool afk = other.TryGetComponent<Rigidbody>(out Rigidbody inv);
-        //Debug.Log("TryGetComponent = " + afk + " " + other.name);
         if (other.TryGetComponent<PlayerInvertedMovement>(out PlayerInvertedMovement invertedMovement))
         {
             if (other.TryGetComponent<PlayerMovement>(out PlayerMovement normalMovement) && normalMovement.enabled == true)

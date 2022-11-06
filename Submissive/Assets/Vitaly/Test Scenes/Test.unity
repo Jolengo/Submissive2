@@ -530,6 +530,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5011064318093816059, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+      propertyPath: _pauseMenu
+      value: 
+      objectReference: {fileID: 1475144415}
     - target: {fileID: 8852588317523406341, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
       propertyPath: runSpeed
       value: 14
@@ -542,6 +546,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8852588317523406341, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
+      propertyPath: _pauseMenu
+      value: 
+      objectReference: {fileID: 1475144415}
     - target: {fileID: 8852588317523406341, guid: f3da30fc53c405e4991be352c4e670b1, type: 3}
       propertyPath: _walkSound
       value: 
