@@ -5,115 +5,130 @@ using UnityEngine.Events;
 
 public class DoorEvents : MonoBehaviour
 {
-    public Camera PlayerCamera;
-    public HingeJoint DoorJoint;
+    [Header("Target object")]
+    [Tooltip("Automatically uses an object from LeafRoot")]
+    [SerializeField]
+    private Transform _rotatingLeaf;
 
-    public Transform PlayerPosition;
+    [Header("Main")] [SerializeField] private DoorState _state = DoorState.Close;
+    [SerializeField] private AnimationCurve _animationCurve;
+    [SerializeField] private float _duration = 1.0f;
+    [Range(180, 90)] [SerializeField] private float _openAngle = 90.0f;
+    [Header("Audio")] [SerializeField] private AudioClip _openingClip;
+    [SerializeField] private AudioClip _closingClip;
+    [Header("Optional")] [SerializeField] private AudioSource _audioSource;
+    private Coroutine _rotateCoroutine;
 
-    public AudioSource Open;
-    public AudioSource Close;
-
-    public float TimeToClose = 10f;
-    public float OpeningDistance = 10f;
-
-    private bool _isOpen = false;
-    private bool _isAbleToOpen = true;
-    private float _timeOpened = 0f;
-    private Vector3 _doorPosition;
-    private Vector3 _playerPosition;
-    private RaycastHit _hit;
-    private float _startDoorAngle;
-
-    private void Start()
+    private void Awake()
     {
-        _startDoorAngle = DoorJoint.gameObject.transform.rotation.eulerAngles.y;
+        AssignLeaf();
+
+        if (!_audioSource)
+            _audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    void Update()
+    public void Toggle()
     {
-        if (_isOpen)
-        {
-            _timeOpened += Time.deltaTime;
-            if (_timeOpened >= TimeToClose)
-            {
-                _isOpen = false;
-                _timeOpened = 0f;
-            }
-        }
-
-        DoorOpening();
-        IsAbleToOpenByDistance();
-        OpenTheDoor();
-        DoorOpener();
+        var currentAngle = GetCurrentAngle();
+        if (GetDoorState(currentAngle) == DoorState.Close)
+            Open();
+        else if (GetDoorState(currentAngle) == DoorState.Open)
+            Close();
     }
 
-    public void OpenTheDoor()
+    public void Open()
     {
-        Ray ray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out _hit))
+        var currentAngle = GetCurrentAngle();
+
+        if (GetDoorState(currentAngle) == DoorState.Open)
+            return;
+
+        if (_rotateCoroutine != null)
+            StopCoroutine(_rotateCoroutine);
+
+        PlaySound(_closingClip);
+        _rotateCoroutine = StartCoroutine(Rotate(currentAngle, _openAngle));
+    }
+
+    public void Close()
+    {
+        var currentAngle = GetCurrentAngle();
+
+        if (GetDoorState(currentAngle) == DoorState.Close)
+            return;
+
+        if (_rotateCoroutine != null)
+            StopCoroutine(_rotateCoroutine);
+
+        PlaySound(_openingClip);
+        _rotateCoroutine = StartCoroutine(Rotate(currentAngle, 0));
+    }
+
+    private void OnValidate()
+    {
+        AssignLeaf();
+
+        switch (_state)
         {
-            if (_hit.collider.GetComponentInParent<HingeJoint>() &&
-                Input.GetMouseButtonDown(0) &&
-                _isAbleToOpen)
-            {
-                if (_isOpen)
-                {
-                    _isOpen = false;
-                    Close.PlayDelayed(0.2f);
-                    _timeOpened = 0f;
-                }
-                else
-                {
-                    _isOpen = true;
-                    Open.Play();
-                }
-            }
+            case DoorState.Open:
+                _rotatingLeaf.transform.rotation = Quaternion.Euler(0, _openAngle, 0);
+                break;
+            case DoorState.Close:
+                _rotatingLeaf.transform.rotation = Quaternion.identity;
+                break;
         }
     }
 
-    public void DoorOpener()
+    private IEnumerator Rotate(float start, float end)
     {
-        JointSpring doorSpring = DoorJoint.spring;
-
-        if (_isOpen)
+        for (float i = 0; i < 1; i += Time.deltaTime / _duration)
         {
-            doorSpring.targetPosition = DoorJoint.limits.max;
-        }
-        else
-        {
-            doorSpring.targetPosition = DoorJoint.limits.min;
+            _rotatingLeaf.transform.rotation = Quaternion.Lerp(
+                Quaternion.Euler(0, start, 0),
+                Quaternion.Euler(0, end, 0),
+                _animationCurve.Evaluate(i));
+
+            yield return null;
         }
 
-        DoorJoint.spring = doorSpring;
+        _rotatingLeaf.transform.rotation = Quaternion.Euler(0, end, 0);
+        _rotateCoroutine = null;
     }
 
-    public void DoorOpening()
+    private float GetCurrentAngle()
     {
-        float y = Mathf.Round(DoorJoint.gameObject.transform.rotation.eulerAngles.y - _startDoorAngle);
-        bool isTrigger = DoorJoint.gameObject.GetComponent<Collider>().isTrigger;
-
-        if (y == DoorJoint.limits.min || y == DoorJoint.limits.max)
-        {
-            isTrigger = false;
-        }
-        else
-        {
-            isTrigger = true;
-        }
-
-        DoorJoint.gameObject.GetComponent<Collider>().isTrigger = isTrigger;
+        float currentAngle = Quaternion.Angle(Quaternion.identity, _rotatingLeaf.transform.rotation);
+        currentAngle *= _openAngle > 0 ? 1 : -1;
+        return currentAngle;
     }
 
-    public void IsAbleToOpenByDistance()
+    private void AssignLeaf()
     {
-        _doorPosition = DoorJoint.GetComponent<Transform>().position;
-        _playerPosition = PlayerPosition.position;
+        if (!_rotatingLeaf)
+            _rotatingLeaf = transform;
+    }
 
-        float distance;
-        distance = Vector3.Distance(_doorPosition, _playerPosition);
-        if (distance >= OpeningDistance)
-            _isAbleToOpen = false;
-        else
-            _isAbleToOpen = true;
+    private void PlaySound(AudioClip clip)
+    {
+        _audioSource.clip = clip;
+        _audioSource.Play();
+    }
+
+    private DoorState GetDoorState(float currentAngle)
+    {
+        if (Mathf.Approximately(0, currentAngle))
+            return DoorState.Close;
+
+        if (Mathf.Approximately(_openAngle, currentAngle))
+            return DoorState.Open;
+
+        return DoorState.Undefined;
+    }
+
+    private enum DoorState
+    {
+        Undefined,
+        Open,
+        Close,
     }
 }

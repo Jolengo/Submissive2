@@ -6,6 +6,8 @@ public class SpawnDoorOnTrigger : MonoBehaviour
 {
     public GameObject Wall;
     public GameObject Door;
+    public GameObject WallText;
+    public GameObject DoorText;
     
     private void OnTriggerEnter(Collider other)
     {
@@ -15,7 +17,8 @@ public class SpawnDoorOnTrigger : MonoBehaviour
             {
                 Wall.SetActive(false);
                 Door.SetActive(true);
-                
+                WallText.SetActive(false);
+                DoorText.SetActive(true);
             }
         }
     }
