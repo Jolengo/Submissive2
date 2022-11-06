@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnDoorOnTrigger : MonoBehaviour
+public class SpawnWallOnTrigger : MonoBehaviour
 {
     public GameObject Wall;
-    //public GameObject Door;
-    public GameObject WallText;
-    public GameObject DoorText;
 
-    public GameObject FirstObject;
     private bool _isObjectActivated = false;
 
     private void OnTriggerEnter(Collider other)
@@ -18,12 +14,7 @@ public class SpawnDoorOnTrigger : MonoBehaviour
         {
             if (other.attachedRigidbody.GetComponent<PlayerMovement>() && !_isObjectActivated)
             {
-                Wall.SetActive(false);
-                //Door.SetActive(true);
-                WallText.SetActive(false);
-                DoorText.SetActive(true);
-
-                FirstObject.SetActive(true);
+                Wall.SetActive(true);
                 _isObjectActivated = true;
             }
         }

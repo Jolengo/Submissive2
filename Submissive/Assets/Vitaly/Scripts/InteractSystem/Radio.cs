@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Radio : MonoBehaviour, IInteractable
 {
+    public GameObject Door;
+
     [SerializeField] private AudioSource[] _audioSources;
     // —юда вставьте нужную аудиодорожку радио
     [SerializeField] private AudioSource _trueRadioAudioSource;
@@ -60,6 +62,7 @@ public class Radio : MonoBehaviour, IInteractable
         if (sourceTrack.isPlaying)
         {
             Debug.Log("return true");
+            Door.SetActive(false);
             CheckWasTrue?.Invoke();
             return true;
         }

@@ -8,6 +8,8 @@ public class ChangeMovementTrigger : MonoBehaviour
 
     public string InteractionPrompt => _prompt;
 
+    private bool _isEnter = false;
+
     public bool Interact(Interactor interactor)
     {
         throw new System.NotImplementedException();
@@ -15,7 +17,7 @@ public class ChangeMovementTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<PlayerInvertedMovement>(out PlayerInvertedMovement invertedMovement))
+        if (!_isEnter && other.TryGetComponent<PlayerInvertedMovement>(out PlayerInvertedMovement invertedMovement))
         {
             if (other.TryGetComponent<PlayerMovement>(out PlayerMovement normalMovement) && normalMovement.enabled == true)
             {
@@ -27,6 +29,7 @@ public class ChangeMovementTrigger : MonoBehaviour
                 normalMovement.enabled = true;
                 invertedMovement.enabled = false;
             }
+            _isEnter = true;
         }
     }
 }

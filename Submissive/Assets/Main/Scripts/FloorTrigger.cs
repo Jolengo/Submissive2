@@ -7,16 +7,19 @@ public class FloorTrigger : MonoBehaviour
     public GameObject Text;
     public Camera PlayerCamera;
 
-    void Update()
+    private void OnTriggerStay(Collider other)
     {
         RaycastHit hit;
 
-        Ray ray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
+        if (other.attachedRigidbody)
         {
-            if (hit.collider.GetComponentInParent<FloorTrigger>())
+            Ray ray = PlayerCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
             {
-                Text.SetActive(true);
+                if (hit.collider.GetComponentInParent<FloorTrigger>())
+                {
+                    Text.SetActive(true);
+                }
             }
         }
     }
