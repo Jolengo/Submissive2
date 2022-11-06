@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+    [SerializeField] private PauseMenu _pauseMenu;
+
     public float sensX;
     public float sensY;
 
@@ -20,20 +22,18 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
-
-        yRotation += mouseX;
-
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        /*if (xRotation >= -10f && xRotation <= 10f)
+        if (!_pauseMenu.GameIsPaused)
         {
-            xRotation = Random.Range(-5f, 5f);
-        }*/
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+            yRotation += mouseX;
+
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        }
     }
 }
