@@ -769,6 +769,9 @@ MonoBehaviour:
   JumpHeight: 1.5
   MaxBoost: -2
   GroundDistance: 0.4
+  ShakeDelay: 0.85
+  ShakeDuration: 0.03
+  CameraShake: {fileID: 1663210506}
   GroundCheck: {fileID: 1495386387}
   GroundMask:
     serializedVersion: 2
@@ -989,6 +992,7 @@ GameObject:
   - component: {fileID: 1663210502}
   - component: {fileID: 1663210504}
   - component: {fileID: 1663210505}
+  - component: {fileID: 1663210506}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -1093,6 +1097,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Amount: 1
   Speed: 1
+--- !u!114 &1663210506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663210499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ea63e1e88c0be4d82b8b39b1897ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTransform: {fileID: 1663210500}
+  shakeDuration: 0
+  shakeAmount: 0.075
+  decreaseFactor: 0.5
 --- !u!1 &1895112192
 GameObject:
   m_ObjectHideFlags: 0
