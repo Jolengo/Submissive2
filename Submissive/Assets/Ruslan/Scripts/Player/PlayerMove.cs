@@ -8,10 +8,16 @@ public class PlayerMove : MonoBehaviour
 
     public float WalkSpeed = 6f;
     public float RunSpeed = 10f;
+
     public float Gravity = -9.81f;
     public float JumpHeight = 3f;
     public float MaxBoost = -2f;
     public float GroundDistance = 0.4f;
+
+    public float ShakeDelay = 0.1f;
+    public float ShakeDuration = 0.025f;
+
+    public CameraShake CameraShake;
 
     public Transform GroundCheck;
     public LayerMask GroundMask;
@@ -52,6 +58,7 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded)
         {
             _velocity.y = Mathf.Sqrt(JumpHeight * MaxBoost * Gravity);
+            Invoke("CameraShakeOnJump", ShakeDelay);
         }
 
         _velocity.y += Gravity * Time.deltaTime;
@@ -65,5 +72,10 @@ public class PlayerMove : MonoBehaviour
         {
             Controller.height = _height;
         }
+    }
+
+    public void CameraShakeOnJump()
+    {
+        CameraShake.shakeDuration = ShakeDuration;
     }
 }
