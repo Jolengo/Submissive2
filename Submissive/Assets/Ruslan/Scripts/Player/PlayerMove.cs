@@ -42,8 +42,8 @@ public class PlayerMove : MonoBehaviour
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        Debug.Log("x = " + x.ToString());
-        Debug.Log("z = " + z.ToString());
+        //Debug.Log("x = " + x.ToString());
+        //Debug.Log("z = " + z.ToString());
 
         Vector3 move = transform.right * x + transform.forward * z;        
         if (Input.GetKey(KeyCode.LeftShift))
